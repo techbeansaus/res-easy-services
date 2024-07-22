@@ -6,15 +6,15 @@ services:
       context: ./services/service1
       dockerfile: Dockerfile
     ports:
-      - '6000:6000'
+      - '<REDACTED>:<REDACTED>'
     environment:
       - NODE_ENV=development
-      - PORT=6000
-      - DB_USERNAME=digitalbeansaustralia
-      - DB_PASSWORD=wYMj1Ru3vwRlDtYk
-      - DB_HOST=digital-beans-personal.df3g0ca.mongodb.net
-      - DB_NAME=res-easy
-      - DB_PARAMS=?retryWrites=true&w=majority&appName=digital-beans-personal
+      - PORT=<REDACTED>
+      - DB_USERNAME=<REDACTED>
+      - DB_PASSWORD=<REDACTED>
+      - DB_HOST=<REDACTED>
+      - DB_NAME=<REDACTED>
+      - DB_PARAMS=<REDACTED>
     # depends_on:
     #   - mongo
 
