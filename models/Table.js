@@ -18,6 +18,14 @@ const tableSchema = new mongoose.Schema({
   restaurantId: {
     type: String,
     required: true
+  },
+  status: {
+    type: String,
+    required: false
+  },
+  reservedFor:{
+    type: String,
+    required: false
   }
 });
 

@@ -48,24 +48,8 @@ const reservationSchema = new mongoose.Schema({
     required: false
   },
   underName:{
-    person:{
-      name:{
-        type: String,
-        required: true
-      },
-      telephone:{
-        type: String,
-        required: false
-      },
-      email:{
-        type: String,
-        required: false
-      },
-      birthDate:{
-        type: Date,
-        required: false
-      }
-    }
+    type: String,
+    required: false
   }  
 });
 
