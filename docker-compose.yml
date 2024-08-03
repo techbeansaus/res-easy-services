@@ -1,35 +1,84 @@
 version: '3.8'
 
 services:
-  service1:
+  tenant-and-restaurant-service:
     build:
-      context: ./services/service1
-      dockerfile: Dockerfile
+      context: ./
+      dockerfile: TenantAndRestaurantServiceDockerfile
+    container_name: tenant-and-restaurant-service
     ports:
-      - '<REDACTED>:<REDACTED>'
+      - '6000:6000'
     environment:
       - NODE_ENV=development
-      - PORT=<REDACTED>
-      - DB_USERNAME=<REDACTED>
-      - DB_PASSWORD=<REDACTED>
-      - DB_HOST=<REDACTED>
-      - DB_NAME=<REDACTED>
-      - DB_PARAMS=<REDACTED>
-    # depends_on:
-    #   - mongo
+      - PORT=6000
+      - DB_USERNAME=digitalbeansaustralia
+      - DB_PASSWORD=wYMj1Ru3vwRlDtYk
+      - DB_HOST=digital-beans-personal.df3g0ca.mongodb.net
+      - DB_NAME=res-easy
+      - DB_PARAMS=?retryWrites=true&w=majority&appName=digital-beans-personal
 
-  # service2:
-  #   build:
-  #     context: ./services/service2
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - '5002:5002'
-  #   environment:
-  #     - NODE_ENV=development
-  #     - MONGO_URI=mongodb://mongo:27017/test
-  #   depends_on:
-  #     - mongo
 
+  customer-service:
+    container_name: customer-service
+    build:
+      context: ./
+      dockerfile: CustomerServiceDockerfile
+    ports:
+      - '6001:6001'
+    environment:
+      - NODE_ENV=development
+      - PORT=6001
+      - DB_USERNAME=digitalbeansaustralia
+      - DB_PASSWORD=wYMj1Ru3vwRlDtYk
+      - DB_HOST=digital-beans-personal.df3g0ca.mongodb.net
+      - DB_NAME=res-easy
+      - DB_PARAMS=?retryWrites=true&w=majority&appName=digital-beans-personal
+  
+  reservation-service:
+    container_name: reservation-service
+    build:
+      context: ./
+      dockerfile: ReservationServiceDockerfile
+    ports:
+      - '6002:6002'
+    environment:
+      - NODE_ENV=development
+      - PORT=6002
+      - DB_USERNAME=digitalbeansaustralia
+      - DB_PASSWORD=wYMj1Ru3vwRlDtYk
+      - DB_HOST=digital-beans-personal.df3g0ca.mongodb.net
+      - DB_NAME=res-easy
+      - DB_PARAMS=?retryWrites=true&w=majority&appName=digital-beans-personal 
+
+  table-service:
+    container_name: table-service
+    build:
+      context: ./
+      dockerfile: TableServiceDockerfile
+    ports:
+      - '6003:6003'
+    environment:
+      - NODE_ENV=development
+      - PORT=6003
+      - DB_USERNAME=digitalbeansaustralia
+      - DB_PASSWORD=wYMj1Ru3vwRlDtYk
+      - DB_HOST=digital-beans-personal.df3g0ca.mongodb.net
+      - DB_NAME=res-easy
+      - DB_PARAMS=?retryWrites=true&w=majority&appName=digital-beans-personal 
+
+
+  nginx:
+    image: nginx:latest
+    container_name: proxy-service
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - tenant-and-restaurant-service
+      - customer-service
+      - reservation-service
+      - table-service
   # mongo:
   #   image: mongo:4.4
   #   ports:
