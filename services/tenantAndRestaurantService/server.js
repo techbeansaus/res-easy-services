@@ -10,10 +10,16 @@ const setupSwagger = require('../../commons/swagger');
 // load schema/data models
 const Tenant = require('../../models/Tenant');
 const Restaurant = require('../../models/Restaurant');
+const cors = require('cors');
 
 // Create express app
 const app = express();
 
+app.use(cors({
+    origin: '*', // Adjust according to your needs
+    methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'PATCH'],
+    allowedHeaders: ['Authorization', 'Content-Type']
+}));
 // Setup Swagger
 setupSwagger(app);
 

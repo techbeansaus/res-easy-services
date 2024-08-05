@@ -2,8 +2,13 @@ const express = require('express');
 const mongoose = require('mongoose');
 const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
-
+const cors = require('cors');
 const app = express();
+app.use(cors({
+    origin: '*', // Adjust according to your needs
+    methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'PATCH'],
+    allowedHeaders: ['Authorization', 'Content-Type']
+}));
 
 const customerRoutes = require('../../routes/customerRoutes');
 

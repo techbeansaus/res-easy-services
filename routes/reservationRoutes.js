@@ -8,25 +8,34 @@ const { v4: uuidv4 } = require('uuid');
 
 
 router.post('/', async (req, res) => {
-    const { reservationFor, customerName, customerPhone, startTime, partySize } = req.body;
+    console.log(req.body);
+    // // const { reservationFor, customerName, customerPhone, startTime, partySize } = req.body;
 
+    const {firstName, lastName, emailAddress, phoneNumber, bookingDate, timeSlot, numberOfGuests} = req.body;
     try {
-        let customer = await Customer.findOne({ telephone: customerPhone });
+        let customer = await Customer.findOne({ telephone: phoneNumber });
         if (!customer) {
             customer = new Customer({
-                givenName: customerName,
-                telephone: customerPhone
+                givenName: firstName + ' ' + lastName,
+                telephone: phoneNumber
             });
             await customer.save();
         }
 
         const newReservation = new Reservation({
-            reservationFor,
-            underName: customer.id,
-            startTime,
-            partySize
+            customerName: firstName + ' ' + lastName,
+            customerContact: emailAddress,
+            bookingTime: new Date(),
+            id: uuidv4(),
+            reservationStatus: 'pending',
+            customerId: customer.id,
+            partySize: numberOfGuests,
+            startTime: new Date(bookingDate + ' ' + timeSlot)
+            // reservationFor: Restaurant.findOne({ id: 'b25d040b-2e71-429f-aa07-15513f12c654' })
+
         });
 
+        console.log(newReservation);
         await newReservation.save();
         res.status(201).json(newReservation);
     } catch (err) {

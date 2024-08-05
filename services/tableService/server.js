@@ -1,8 +1,13 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 const app = express();
-
+app.use(cors({
+    origin: '*', // Adjust according to your needs
+    methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'PATCH'],
+    allowedHeaders: ['Authorization', 'Content-Type']
+}));
 const tableRoutes = require('../../routes/tableRoutes');
 
 const { DB_USERNAME,DB_PASSWORD,DB_HOST,DB_NAME,DB_PARAMS, PORT = 6002 } = process.env;
