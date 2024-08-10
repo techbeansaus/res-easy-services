@@ -35,7 +35,7 @@ export default function BaseUI(){
 
 
 {/* Sidebar */}
-<SideBar />
+<SideBar/>
 {/* // <!-- End Sidebar --> */}
 
 {/* // <!-- Content --> */}
