@@ -50,7 +50,11 @@ const reservationSchema = new mongoose.Schema({
   underName:{
     type: String,
     required: false
-  }  
+  },
+  specialRequest:{
+    type: String,
+    required: false
+  }
 });
 
 module.exports = mongoose.model('Reservation', reservationSchema);

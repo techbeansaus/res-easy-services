@@ -11,17 +11,23 @@ router.post('/', async (req, res) => {
     console.log(req.body);
     // // const { reservationFor, customerName, customerPhone, startTime, partySize } = req.body;
 
-    const {firstName, lastName, emailAddress, phoneNumber, bookingDate, timeSlot, numberOfGuests} = req.body;
+    const {firstName, lastName, emailAddress, phoneNumber, bookingDate, timeSlot, numberOfGuests, specialRequest} = req.body;
     try {
         let customer = await Customer.findOne({ telephone: phoneNumber });
+        
         if (!customer) {
+            console.log("Creating new customer");
             customer = new Customer({
                 givenName: firstName + ' ' + lastName,
-                telephone: phoneNumber
+                telephone: phoneNumber,
+                email: emailAddress
             });
             await customer.save();
         }
 
+        
+        console.log("Customer details are: ");
+        console.log(customer);
         const newReservation = new Reservation({
             customerName: firstName + ' ' + lastName,
             customerContact: emailAddress,
@@ -30,7 +36,8 @@ router.post('/', async (req, res) => {
             reservationStatus: 'pending',
             customerId: customer.id,
             partySize: numberOfGuests,
-            startTime: new Date(bookingDate + ' ' + timeSlot)
+            startTime: new Date(bookingDate + ' ' + timeSlot),
+            specialRequest: specialRequest
             // reservationFor: Restaurant.findOne({ id: 'b25d040b-2e71-429f-aa07-15513f12c654' })
 
         });
