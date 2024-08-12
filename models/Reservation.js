@@ -54,6 +54,10 @@ const reservationSchema = new mongoose.Schema({
   specialRequest:{
     type: String,
     required: false
+  },
+  reservationFor:{
+    type: String,
+    required: false
   }
 });
 

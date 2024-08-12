@@ -10,12 +10,28 @@ export default function ReservationGrid() {
 
         const [data, setData] = useState([{'id': '', 'customerName': '', 'partySize': '', 'customerPhone': '', 'reservationStatus': '', 'customerContact': '', 'startTime':'', 'specialRequest':''}]);
         
+        const today = new Date().toISOString().slice(0, 10);
+        const [date, setDate] = useState(today);
+        
         useEffect(() => {
-          // Fetch data from API
-          fetchData();
-        }, []);
+          // Fetch data from API, by default load reservations for today
+          getReservationsByDate(date);
+          //getAllReservations();
+        }, [date]);
+
+        
+
+        const getReservationsByDate = async (date: string) => {
+          try {
+            const response = await fetch('http://localhost:6002/api/reservations?date=' + date); // Replace with your API endpoint
+            const result = await response.json();
+            setData(result);
+          } catch (error) {
+            console.error('Error fetching data:', error);
+          }
+        }
       
-        const fetchData = async () => {
+        const getAllReservations = async () => {
           try {
             const response = await fetch('http://localhost:6002/api/reservations'); // Replace with your API endpoint
             const result = await response.json();

@@ -9,9 +9,8 @@ const { v4: uuidv4 } = require('uuid');
 
 router.post('/', async (req, res) => {
     console.log(req.body);
-    // // const { reservationFor, customerName, customerPhone, startTime, partySize } = req.body;
 
-    const {firstName, lastName, emailAddress, phoneNumber, bookingDate, timeSlot, numberOfGuests, specialRequest} = req.body;
+    const {firstName, lastName, emailAddress, phoneNumber, bookingDate, timeSlot, numberOfGuests, specialRequest, reservationFor} = req.body;
     try {
         let customer = await Customer.findOne({ telephone: phoneNumber });
         
@@ -37,15 +36,15 @@ router.post('/', async (req, res) => {
             customerId: customer.id,
             partySize: numberOfGuests,
             startTime: new Date(bookingDate + ' ' + timeSlot),
-            specialRequest: specialRequest
-            // reservationFor: Restaurant.findOne({ id: 'b25d040b-2e71-429f-aa07-15513f12c654' })
-
+            specialRequest: specialRequest,
+            reservationFor: Restaurant.findOne({ id: reservationFor })
         });
 
         console.log(newReservation);
         await newReservation.save();
         res.status(201).json(newReservation);
     } catch (err) {
+        console.log(err.message);
         res.status(400).json({ error: err.message });
     }
 });

@@ -48,7 +48,7 @@ services:
       - DB_PASSWORD=wYMj1Ru3vwRlDtYk
       - DB_HOST=digital-beans-personal.df3g0ca.mongodb.net
       - DB_NAME=res-easy
-      - DB_PARAMS=?retryWrites=true&w=majority&appName=digital-beans-personal 
+      - DB_PARAMS=?retryWrites=true&w=majority&appName=digital-beans-personal
 
   table-service:
     container_name: table-service

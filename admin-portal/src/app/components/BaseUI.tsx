@@ -1,4 +1,5 @@
 "use client";
+import CreateReservationsUI from "./CreateReservationsUI";
 import ReservationsUI from "./ReservationsUI";
 import SideBar from "./SideBar";
 export default function BaseUI(){
@@ -52,6 +53,11 @@ export default function BaseUI(){
       <div id="reservations" className="min-h-[25rem] scroll-mt-24">
         <ReservationsUI />
       </div>
+
+      <div id="createReservation" className="min-h-[25rem] scroll-mt-24">
+      <CreateReservationsUI />
+      </div>
+      
 
       <div id="customers" className="min-h-[25rem] scroll-mt-24">
         <h2 className="text-lg font-semibold text-gray-800 dark:text-white">Customers</h2>
