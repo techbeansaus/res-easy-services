@@ -11,10 +11,10 @@ services:
     environment:
       - NODE_ENV=development
       - PORT=6000
-      - DB_USERNAME=digitalbeansaustralia
-      - DB_PASSWORD=wYMj1Ru3vwRlDtYk
-      - DB_HOST=digital-beans-personal.df3g0ca.mongodb.net
-      - DB_NAME=res-easy
+      - DB_USERNAME=<REDACTED>
+      - DB_PASSWORD=<REDACTED>
+      - DB_HOST=<REDACTED>
+      - DB_NAME=<REDACTED>
       - DB_PARAMS=?retryWrites=true&w=majority&appName=digital-beans-personal
 
 
@@ -28,10 +28,10 @@ services:
     environment:
       - NODE_ENV=development
       - PORT=6001
-      - DB_USERNAME=digitalbeansaustralia
-      - DB_PASSWORD=wYMj1Ru3vwRlDtYk
-      - DB_HOST=digital-beans-personal.df3g0ca.mongodb.net
-      - DB_NAME=res-easy
+      - DB_USERNAME=<REDACTED>
+      - DB_PASSWORD=<REDACTED>
+      - DB_HOST=<REDACTED>
+      - DB_NAME=<REDACTED>
       - DB_PARAMS=?retryWrites=true&w=majority&appName=digital-beans-personal
   
   reservation-service:
@@ -44,10 +44,10 @@ services:
     environment:
       - NODE_ENV=development
       - PORT=6002
-      - DB_USERNAME=digitalbeansaustralia
-      - DB_PASSWORD=wYMj1Ru3vwRlDtYk
-      - DB_HOST=digital-beans-personal.df3g0ca.mongodb.net
-      - DB_NAME=res-easy
+      - DB_USERNAME=<REDACTED>
+      - DB_PASSWORD=<REDACTED>
+      - DB_HOST=<REDACTED>
+      - DB_NAME=<REDACTED>
       - DB_PARAMS=?retryWrites=true&w=majority&appName=digital-beans-personal
 
   table-service:
@@ -60,10 +60,10 @@ services:
     environment:
       - NODE_ENV=development
       - PORT=6003
-      - DB_USERNAME=digitalbeansaustralia
-      - DB_PASSWORD=wYMj1Ru3vwRlDtYk
-      - DB_HOST=digital-beans-personal.df3g0ca.mongodb.net
-      - DB_NAME=res-easy
+      - DB_USERNAME=<REDACTED>
+      - DB_PASSWORD=<REDACTED>
+      - DB_HOST=<REDACTED>
+      - DB_NAME=<REDACTED>
       - DB_PARAMS=?retryWrites=true&w=majority&appName=digital-beans-personal 
 
 
