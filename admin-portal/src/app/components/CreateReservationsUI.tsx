@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
-const START_TIME=process.env.NEXT_PUBLIC_RESTAURANT_START_TIME;
-const END_TIME=process.env.NEXT_PUBLIC_RESTAURANT_END_TIME;
+const START_TIME=process.env.NEXT_PUBLIC_RESTAURANT_START_TIME || "11:00 AM";
+const END_TIME=process.env.NEXT_PUBLIC_RESTAURANT_END_TIME || "09:00 PM";
 
 export default function CreateReservationsUI({ syncReservations }: any) {
 
@@ -49,7 +49,7 @@ export default function CreateReservationsUI({ syncReservations }: any) {
     });
   }
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     // building the request object which POST the form data to the Booking service
@@ -98,7 +98,7 @@ export default function CreateReservationsUI({ syncReservations }: any) {
     return intervals;
   }
   
-  function convertToMinutes(time) {
+  function convertToMinutes(time: string) {
     const [timePart, modifier] = time.split(' ');
     let [hours, minutes] = timePart.split(':').map(Number);
   
@@ -112,7 +112,7 @@ export default function CreateReservationsUI({ syncReservations }: any) {
     return hours * 60 + minutes;
   }
   
-  function formatTime(minutes) {
+  function formatTime(minutes: number) {
     const hours = Math.floor(minutes / 60);
     const mins = minutes % 60;
     const period = hours >= 12 ? 'PM' : 'AM';
