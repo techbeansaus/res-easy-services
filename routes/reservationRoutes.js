@@ -5,7 +5,7 @@ const Customer = require('../models/Customer');
 const Restaurant = require('../models/Restaurant');
 const { v4: uuidv4 } = require('uuid');
 
-
+const DEFAULT_STATUS = process.env.DEFAULT_STATUS || 'ACCEPTED';
 
 router.post('/', async (req, res) => {
     console.log(req.body);
@@ -19,7 +19,7 @@ router.post('/', async (req, res) => {
             customer = new Customer({
                 givenName: firstName + ' ' + lastName,
                 telephone: phoneNumber,
-                email: emailAddress
+                email: emailAddress||'',
             });
             await customer.save();
         }
@@ -29,25 +29,49 @@ router.post('/', async (req, res) => {
         console.log(customer);
         const newReservation = new Reservation({
             customerName: firstName + ' ' + lastName,
-            customerContact: emailAddress,
+            customerEmail: emailAddress,
+            customerPhone: phoneNumber,
             bookingTime: new Date(),
             id: uuidv4(),
-            reservationStatus: 'pending',
+            reservationStatus: `${DEFAULT_STATUS}`,
             customerId: customer.id,
             partySize: numberOfGuests,
             startTime: new Date(bookingDate + ' ' + timeSlot),
             specialRequest: specialRequest,
-            reservationFor: Restaurant.findOne({ id: reservationFor })
+            reservationFor: reservationFor
         });
 
         console.log(newReservation);
         await newReservation.save();
-        res.status(201).json(newReservation);
+        res.status(200).json(newReservation);
     } catch (err) {
         console.log(err.message);
         res.status(400).json({ error: err.message });
     }
 });
+
+router.get('/date', async (req, res) => {
+    const { date } = req.query;
+
+    try {
+        const start = new Date(date);
+        const end = new Date(date);
+        end.setDate(end.getDate() + 1);
+
+        const reservations = await Reservation.find({
+            startTime: {
+                $gte: start,
+                $lt: end
+            }
+        });
+        res.status(200).json(reservations);
+    } catch (err) {
+        res.status(400).json({ error: err.message });
+    }
+});
+
+
+
 
 
 router.get('/', async (req, res) => {

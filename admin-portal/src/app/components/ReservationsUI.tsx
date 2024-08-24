@@ -1,12 +1,42 @@
+import { useEffect, useState } from "react";
+import { testNextEnvironment } from "../services/ApiService";
 import ReservationGrid from "./ReservationGrid";
-export default function ReservationsUI() {
+console.log(testNextEnvironment());
 
-    const data = [
-        { id: 1, name: "EkOnkar", entityType:"Naam", description: "Dhan Dhan Mahraj ji", alias: "Waheguru", status: "Active", category: "Naam" },
-        { id: 1, name: "Satnam", entityType:"Naam", description: "Dhan Dhan Baba Siri Chand Saheb", alias: "Waheguru", status: "Active", category: "Naam"},
-        { id: 1, name: "SriWaheguru", entityType:"Naam", description: "Dhan Guru Gobind Singh Saheb", alias: "Waheguru", status: "Active", category: "Naam" },
-        { id: 1, name: "Naam Jap", entityType:"Naam", description: "Dhan Guru Gur Nanak Saheb", alias: "Waheguru", status: "Active", category: "Naam" }
-      ];
+
+// following function is used to convert date from dd/mm/yyyy to yyyy-mm-dd
+function convertDate(date: string): string {
+  const parts = date.split('/');
+  const year = parts[2];
+  const month = parts[1].padStart(2, '0');
+  const day = parts[0].padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
+// set default date to today
+function setDefaultDate(): string {
+  const localTime = new Date().toLocaleDateString();
+  return convertDate(localTime);
+}
+
+// ReservationsUI component definition
+export default function ReservationsUI(props: any) {
+  const [selectedDate, setSelectedDate] = useState('');
+  const [today, setToday] = useState('');
+
+  useEffect(() => {
+    setSelectedDate(setDefaultDate());
+    setToday(setDefaultDate());
+  }, []);
+
+
+
+  // handle date selection
+  function handleDateSelection(event: any): void {
+    console.log("Date selection");
+    console.log(event.target.value);
+    setSelectedDate(event.target.value);
+  }
 
   return (
     <div>
@@ -28,8 +58,15 @@ export default function ReservationsUI() {
 
                 <div>
                   <div className="inline-flex gap-x-2">
-                    <a className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:bg-gray-50 dark:bg-transparent dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800" href="#">
-                      View all
+
+                    <div>
+                      <label htmlFor="dateFilter" className="block mb-2 text-sm text-gray-700 font-medium dark:text-white"></label>
+                      <input type="date" id="dateFilter" value={selectedDate}  onChange={handleDateSelection} name="bookingDate" className="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" />
+                    </div>
+
+
+                    <a className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:bg-gray-50 dark:bg-transparent dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-800 dark:focus:bg-neutral-800" href="#reservations" onClick={handleDateSelection}>
+                      Refresh
                     </a>
 
                     <a className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none" href="#createReservationsUI">
@@ -46,13 +83,13 @@ export default function ReservationsUI() {
 
               {/* <!-- Table --> */}
 
-                <ReservationGrid />
+              <ReservationGrid selectedDate={selectedDate} today={today}/>
 
               {/* <!-- Footer --> */}
               <div className="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-t border-gray-200 dark:border-neutral-700">
                 <div>
                   <p className="text-sm text-gray-600 dark:text-neutral-400">
-                    <span className="font-semibold text-gray-800 dark:text-neutral-200">12</span> results
+                    <span className="font-semibold text-gray-800 dark:text-neutral-200"></span> results
                   </p>
                 </div>
 
@@ -81,6 +118,6 @@ export default function ReservationsUI() {
       </div>
       {/* <!-- End Card --> */}
     </div>
-//   <!-- End Content -->
+    //   <!-- End Content -->
   );
 }

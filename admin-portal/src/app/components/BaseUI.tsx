@@ -1,8 +1,20 @@
 "use client";
+import { useState } from "react";
 import CreateReservationsUI from "./CreateReservationsUI";
 import ReservationsUI from "./ReservationsUI";
 import SideBar from "./SideBar";
 export default function BaseUI(){
+
+  const [syncedReservations, setSyncedReservations] = useState([]);
+  const syncReservations = async () => {
+    console.log("Syncing reservations");
+    const res = await fetch('http://localhost:6002/api/reservations');
+    const jsonRes = await res.json();
+    setSyncedReservations(jsonRes);
+    console.log(jsonRes);
+  }
+
+
     return (
         <div>
              {/* // <!-- ========== MAIN CONTENT ========== --> */}
@@ -51,11 +63,11 @@ export default function BaseUI(){
       </div>
 
       <div id="reservations" className="min-h-[25rem] scroll-mt-24">
-        <ReservationsUI />
+        <ReservationsUI syncedReservations={syncedReservations}/>
       </div>
 
       <div id="createReservation" className="min-h-[25rem] scroll-mt-24">
-      <CreateReservationsUI />
+      <CreateReservationsUI onSuccess={syncReservations}/>
       </div>
       
 

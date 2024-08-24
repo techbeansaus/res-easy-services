@@ -13,3 +13,8 @@ export const getAllReservations = async () => {
 export const submitReservation = async (reservation) => {
 
 }
+
+export const testNextEnvironment = () => {
+    console.log('Next environment is"', process.env.NEXT_PUBLIC_ANALYTICS_ID , '"');
+}
+
