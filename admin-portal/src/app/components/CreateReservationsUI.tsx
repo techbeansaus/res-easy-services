@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 
 const START_TIME=process.env.NEXT_PUBLIC_RESTAURANT_START_TIME || "11:00 AM";
 const END_TIME=process.env.NEXT_PUBLIC_RESTAURANT_END_TIME || "09:00 PM";
@@ -36,7 +36,7 @@ export default function CreateReservationsUI({ syncReservations }: any) {
 
   const [reservation, setReservation] = useState(emptyReservation);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: any) => {
     console.log(reservation);
     console.log(event);
     const { name, value } = event.target;
