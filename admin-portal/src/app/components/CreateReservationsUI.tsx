@@ -62,7 +62,7 @@ export default function CreateReservationsUI({ syncReservations }: any) {
     };
     try {
       console.log(req);
-      const res = await fetch('http://localhost:6002/api/reservations', req);
+      const res = await fetch(`${process.env.NEXT_PUBLIC_RESERVATION_URL}/api/reservations`, req);
       const jsonRes = await res.json;
       console.log(jsonRes);
       setReservation(emptyReservation);

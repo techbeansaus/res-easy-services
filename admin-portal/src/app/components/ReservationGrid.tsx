@@ -40,7 +40,7 @@ export default function ReservationGrid(props: any) {
 
   const getReservationsByDate = async (date: string) => {
     try {
-      const response = await fetch('http://localhost:6002/api/reservations/date?date=' + date); // Replace with your API endpoint
+      const response = await fetch(`${process.env.NEXT_PUBLIC_RESERVATION_URL}/api/reservations/date?date=` + date); // Replace with your API endpoint
       const result = await response.json();
       setData(result);
     } catch (error) {
@@ -50,7 +50,7 @@ export default function ReservationGrid(props: any) {
 
   const getAllReservations = async () => {
     try {
-      const response = await fetch('http://localhost:6002/api/reservations'); // Replace with your API endpoint
+      const response = await fetch(`${process.env.NEXT_PUBLIC_RESERVATION_URL}/api/reservations`); // Replace with your API endpoint
       const result = await response.json();
       setData(result);
     } catch (error) {
